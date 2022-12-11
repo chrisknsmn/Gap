@@ -1,11 +1,19 @@
 # Chris Kinsman Portfolio template
 Preset dynamic CSS styling.
 
-## Install
+## App
+### Install
+npm install nodemon -g
+
+### Run
+nodemon app.js 
+
+## Template
+### Install
 npm install
 
-## Development
+### Development
 gulp serve
 
-## Distribute
+### Distribute
 gulp dist
