@@ -1,4 +1,4 @@
-# Chris Kinsman Portfolio template
+# Gap CSS template automation
 Preset dynamic CSS styling.
 
 ## App
