@@ -3,7 +3,7 @@ Preset dynamic CSS styling.
 
 ## App
 ### Install
-npm install nodemon -g
+npm install
 
 ### Run
 nodemon app.js 
