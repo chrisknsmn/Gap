@@ -1,7 +1,7 @@
 {
-    "name": "chris-kinsman-portfolio",
+    "name": "Gap templates",
     "version": "1.0.0",
-    "description": "Portfolio template",
+    "description": "Gap templates",
     "author": "Chris Kinsman",
     "devDependencies": {
         "browser-sync": "^2.13.0",
