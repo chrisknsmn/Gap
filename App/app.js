@@ -1,10 +1,10 @@
+// EXPRESS Start
 const express = require('express');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3030;
 
-// sendFile will go here
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
@@ -12,8 +12,7 @@ app.get('/', function(req, res) {
 app.listen(port);
 console.log('Server started at http://localhost:' + port);
 
-
-
+// GAP functions
 function set(val, name, type, device) {
     // val - the gap amount in px
     // name - class name extension 
@@ -134,8 +133,7 @@ function print() {
     return out;
 }
 
-// Requiring fs module in which
-// writeFile function is defined.
+// Write to scss file
 const fs = require('fs');
 // Data which will write in a file.
 let data = print();
