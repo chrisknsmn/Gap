@@ -13,19 +13,27 @@ app.listen(port);
 console.log('Server started at http://localhost:' + port);
 
 // GAP functions
-function set(val, name, type, device) {
+function set(val, name, type, device, i) {
     // val - the gap amount in px
     // name - class name extension 
     // type - margin or padding
+
+    var imp = '';
+    if(i == true) {
+        imp = '!important';
+    } else {
+        imp = '';
+    }
+
     var ext = type.charAt(0);
     var out = '';
-    out += '.'+device+ext+name+' {'+type+': ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-t'+name+' {'+type+'-top: ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-b'+name+' {'+type+'-bottom: ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-l'+name+' {'+type+'-left: ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-r'+name+' {'+type+'-right: ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-tb'+name+' {'+type+'-top: ' + val + 'px !important; '+type+'-bottom: ' + val + 'px !important;}\n';
-    out += '.'+device+ext+'-lr'+name+' {'+type+'-left: ' + val + 'px !important; '+type+'-right: ' + val + 'px !important;}\n';
+    out += '.'+device+ext+name+' {'+type+': ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-t'+name+' {'+type+'-top: ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-b'+name+' {'+type+'-bottom: ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-l'+name+' {'+type+'-left: ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-r'+name+' {'+type+'-right: ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-tb'+name+' {'+type+'-top: ' + val + 'px '+imp+'; '+type+'-bottom: ' + val + 'px '+imp+';}\n';
+    out += '.'+device+ext+'-lr'+name+' {'+type+'-left: ' + val + 'px '+imp+'; '+type+'-right: ' + val + 'px '+imp+';}\n';
     out += '\n';
     return out;
 }
@@ -54,23 +62,28 @@ function print() {
 
     // GAP MARGINS
     out += '/*Margin*/\n'
-    out += set(0,'-0','margin','');
-    out += set(gapHalf,'-gh','margin','');
-    out += set(gap,'-g','margin','');
+
+    out += set(0,'-0','margin','', true);
+    out += set(gapHalf,'-gh','margin','', true);
+    out += set(gap,'-g','margin','', true);
+
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2)) ;
-        out += set(arr[i],name,'margin','');
+        out += set(arr[i],name,'margin','', true);
     }
+
     out += '@media only screen and (max-width: 640px) {\n\n';
-    out += set(0,'-0','margin','');
-    out += set(gapHalf,'-gh','margin','');
-    out += set(gapHalf,'-g','margin','');
+
+    out += set(0,'-0','margin','', true);
+    out += set(gapHalf,'-gh','margin','', true);
+    out += set(gapHalf,'-g','margin','', true);
+
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2));
         if(i<1) {
-            out += set(15,name,'margin','');
+            out += set(15,name,'margin','', true);
         } else {
-            out += set(arr[i-1],name,'margin','');
+            out += set(arr[i-1],name,'margin','', true);
         }
     }
     out += '}\n\n';
@@ -78,38 +91,40 @@ function print() {
     // GAP MARGINS MOBILE
     out += '/*Margins Mobile*/\n'
     out += '@media only screen and (max-width: 640px) {\n\n';
-    out += set(0,'-0','margin','mob-');
-    out += set(gapHalf,'-gh','margin','mob-');
-    out += set(gapHalf,'-g','margin','mob-');
+    out += set(0,'-0','margin','mob-', true);
+    out += set(gapHalf,'-gh','margin','mob-', true);
+    out += set(gapHalf,'-g','margin','mob-', true);
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2));
         if(i<1) {
-            out += set(15,name,'margin','mob-');
+            out += set(15,name,'margin','mob-', true);
         } else {
-            out += set(arr[i-1],name,'margin','mob-');
+            out += set(arr[i-1],name,'margin','mob-', true);
         }
     }
     out += '}\n\n';
 
     // GAP PADDING
     out += '/*Padding*/ \n'
-    out += set(0,'-0','padding','');
-    out += set(gapHalf,'-gh','padding','');
-    out += set(gap,'-g','padding','');
+    out += set(0,'-0','padding','', true);
+    out += set(gapHalf,'-gh','padding','', true);
+    out += set(gap,'-g','padding','', true);
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2)) ;
-        out += set(arr[i],name,'padding','');
+        out += set(arr[i],name,'padding','', true);
     }
     out += '@media only screen and (max-width: 640px) {\n\n';
-    out += set(0,'-0','padding','');
-    out += set(gapHalf,'-gh','padding','');
-    out += set(gapHalf,'-g','padding','');
+    
+    out += set(0,'-0','padding','', true);
+    out += set(gapHalf,'-gh','padding','', true);
+    out += set(gapHalf,'-g','padding','', true);
+
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2)) ;
         if(i<1) {
-            out += set(15,name,'padding','');
+            out += set(15,name,'padding','', true);
         } else {
-            out += set(arr[i-1],name,'padding','');
+            out += set(arr[i-1],name,'padding','', true);
         }
     }
     out += '}\n';
@@ -117,15 +132,15 @@ function print() {
     // GAP PADDING MOBILE
     out += '/*Padding Mobile*/\n'
     out += '@media only screen and (max-width: 640px) {\n\n';
-    out += set(0,'-0','padding','mob-');
-    out += set(gapHalf,'-gh','padding','mob-');
-    out += set(gapHalf,'-g','padding','mob-');
+    out += set(0,'-0','padding','mob-', true);
+    out += set(gapHalf,'-gh','padding','mob-', true);
+    out += set(gapHalf,'-g','padding','mob-', true);
     for (let i = 0; i < arr.length; i++) {
         name = '-g' + String((i+2)) ;
         if(i<1) {
-            out += set(15,name,'padding','mob-');
+            out += set(15,name,'padding','mob-', true);
         } else {
-            out += set(arr[i-1],name,'padding','mob-');
+            out += set(arr[i-1],name,'padding','mob-', true);
         }
     }
     out += '}\n';
