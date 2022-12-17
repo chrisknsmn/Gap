@@ -11,48 +11,40 @@ app.get('/', function(req, res) {
 
 app.listen(port);
 console.log('Server started at http://localhost:' + port);
+// EXPRESS end
 
 var dir = 
 [
-    {
-        title: '',
-        el: ['']
-    },
-    {
-        title: '-t',
-        el: ['-top']
-    },
-    {
-        title: '-b',
-        el: ['-bottom']
-    },
-    {
-        title: '-l',
-        el: ['-left']
-    },
-    {
-        title: '-r',
-        el: ['-right']
-    },
-
-    {
-        title: '-tb',
-        el: ['-top', '-bottom']
-    },
-    {
-        title: '-lr',
-        el: ['-left', '-right']
-    }
-
+    { title: '', el: [''] },
+    { title: '-t', el: ['-top'] },
+    { title: '-b', el: ['-bottom'] },
+    { title: '-l', el: ['-left'] },
+    { title: '-r', el: ['-right'] },
+    { title: '-tb', el: ['-top', '-bottom'] },
+    { title: '-lr', el: ['-left', '-right'] }
 ];
 
+var gap = 15; 
+// var arr = [gap*2,gap*3,gap*4,gap*5,gap*6];
+var setGaps = 
+[
+    // { title: '0', val: 0 },
+    // { title: '5', val: 5 },
+    { title: 'qtr', val: gap / 4 },
+    { title: 'hlf', val: gap / 2 },
+    { title:   'g', val: gap },
+    { title: 'dbl', val: gap * 2 },
+    { title: 'trp', val: gap * 3 },
+    { title: 'qad', val: gap * 4 }
+];
 
+var mobWidth = '@media only screen and (max-width: 640px) {\n\n';
 
 function setClass(val, title, type, dir, device, important) {
     //Create single class
     var r = ''
     r += '.' + device + type.charAt(0) + dir.title + '-' + title + ' { ';
-    //Looping through miltiple directions
+    //Looping through miltiple declarations
     for (let i = 0; i < dir.el.length; i++) {
         r += type + dir.el[i] + ': ' + val + 'px ' + important + '; ';
     }
@@ -60,71 +52,64 @@ function setClass(val, title, type, dir, device, important) {
     return r;
 }
 
-function classGroup(val, title, type, imp) {
+function classGroup(val, title, type, device, important) {
     var r = ''
+    //Looping through multiple classes
     for (let i = 0; i < dir.length; i++) {
-        r += setClass(val, title, type, dir[i], '', imp);
+        r += setClass(val, title, type, dir[i], device, important);
     }
     r += '\n';
     return r;
 }
 
-function print() {
-    var gapHlf = 5;
-    var gap = 15; 
+//Creates set classes based on gap size - desk shrinks to prev set on mob. 
+function classSetGaps(type, important) {
+    var r = '', desk = '', deskMob = '', mob = '';
 
-    var arr = [gap*2,gap*3,gap*4,gap*5,gap*6];
+    // Set 0 and 5 as defaults 
+    desk += classGroup(0, 0, type, '', important) + classGroup(5, 5, type, '', important);
+    deskMob += classGroup(0, 0, type, '', important) + classGroup(5, 5, type, '', important);
+    mob += classGroup(0, 0, type, 'mob-', important) + classGroup(5, 5, type, 'mob-', important);
 
-    // qtr hlf g dbl 
-
-    var out = "";
-    var name = '';
-
-    //ALL MARGINS 1-100
-    // for (let i = 1; i < 100; i++) {
-    //     name = '-' + String((i)) ;
-    //     out += set(i,name,'margin','',true);
-    // }
-
-    
-    out += classGroup(gapHlf, ( 'g-hlf' ), 'margin', '!important');
-    out += classGroup(gap, ( 'g' ), 'margin', '!important');
-
-    for (let i = 0; i < arr.length; i++) {
-        out += classGroup(arr[i], ( 'g' + (i+2)), 'margin', '!important');
+    //Set parameters based on gap.
+    for (let i = 0; i < setGaps.length; i++) {
+        desk += classGroup(setGaps[i].val, setGaps[i].title, type, '', important);
+        deskMob += classGroup(setGaps[ Math.max(0, (i-1)) ].val, setGaps[i].title, type, '', important);
+        mob += classGroup(setGaps[ Math.max(0, (i-1)) ].val, setGaps[i].title, type, 'mob-', important);
     }
 
-    // for (let i = 0; i <= 100; i++) {
-    //     out += classGroup(i, i, 'margin', '!important');
-    //     out += '\n';
-    // }
+    r += desk;
+    r += mobWidth + deskMob + mob + '}';
+    return r;
+}
 
+//Sets all numbers between range - desk and mob match
+function classAll(type, start, end, important) {
+    var r = '', desk = '', mob = '';
+    for (let i = start; i <= end; i++) {
+        desk += classGroup(i, i, type, '', important);
+        mob += classGroup(i, i, type, 'mob-', important);
+    }
+    r += desk + mobWidth + mob + '}'
+    return r;
+}
 
+function out() {
+    var r = '';
 
-    // GAP PADDING MOBILE
-    // out += '/*Padding Mobile*/\n'
-    // out += '@media only screen and (max-width: 640px) {\n\n';
+    r += classSetGaps('margin', '!important');
+    // r += classSetGaps('padding', '!important');
 
-    // out += set(0,'-0','padding','mob-', true);
-    // out += set(gapHalf,'-gh','padding','mob-', true);
-    // out += set(gapHalf,'-g','padding','mob-', true);
+    // r += classAll('margin', 0, 10, '!important');
+    // r += classAll('padding', 0, 10, '!important');
 
-    // for (let i = 0; i < arr.length; i++) {
-    //     name = '-g' + String((i+2)) ;
-    //     if(i<1) {
-    //         out += set(15,name,'padding','mob-', true);
-    //     } else {
-    //         out += set(arr[i-1],name,'padding','mob-', true);
-    //     }
-    // }
-
-    return out;
+    return r;
 }
 
 // Write to scss file
 const fs = require('fs');
 // Data which will write in a file.
-let data = print();
+let data = out();
 // Write data in 'Output.txt' .
 fs.writeFile('../Template/_assets-custom/sass/gap.scss', data, (err) => {
     // In case of a error throw err.
