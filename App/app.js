@@ -79,7 +79,7 @@ function classSetGaps(type, important) {
     }
 
     r += desk;
-    r += mobWidth + deskMob + mob + '}';
+    r += mobWidth + deskMob + mob + '}\n\n';
     return r;
 }
 
@@ -98,7 +98,7 @@ function out() {
     var r = '';
 
     r += classSetGaps('margin', '!important');
-    // r += classSetGaps('padding', '!important');
+    r += classSetGaps('padding', '!important');
 
     // r += classAll('margin', 0, 10, '!important');
     // r += classAll('padding', 0, 10, '!important');
