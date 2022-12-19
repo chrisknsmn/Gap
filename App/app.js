@@ -24,7 +24,7 @@ var dir =
     { title: '-lr', el: ['-left', '-right'] }
 ];
 
-var gap = 15; 
+var gap = 30; 
 // var arr = [gap*2,gap*3,gap*4,gap*5,gap*6];
 var setGaps = 
 [
@@ -32,7 +32,7 @@ var setGaps =
     // { title: '5', val: 5 },
     { title: 'qtr', val: gap / 4 },
     { title: 'hlf', val: gap / 2 },
-    { title:   'g', val: gap },
+    { title:   'g', val: gap     },
     { title: 'dbl', val: gap * 2 },
     { title: 'trp', val: gap * 3 },
     { title: 'qad', val: gap * 4 }
@@ -100,8 +100,8 @@ function out() {
     r += classSetGaps('margin', '!important');
     r += classSetGaps('padding', '!important');
 
-    // r += classAll('margin', 0, 10, '!important');
-    // r += classAll('padding', 0, 10, '!important');
+    r += classAll('margin', 0, 10, '!important');
+    r += classAll('padding', 0, 10, '!important');
 
     return r;
 }
