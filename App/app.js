@@ -1,3 +1,4 @@
+
 // EXPRESS Start
 const express = require('express');
 const path = require('path');
@@ -100,8 +101,8 @@ function out() {
     r += classSetGaps('margin', '!important');
     r += classSetGaps('padding', '!important');
 
-    r += classAll('margin', 0, 10, '!important');
-    r += classAll('padding', 0, 10, '!important');
+    // r += classAll('margin', 0, 10, '!important');
+    // r += classAll('padding', 0, 10, '!important');
 
     return r;
 }
